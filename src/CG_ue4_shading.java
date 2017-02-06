@@ -100,7 +100,7 @@ public class CG_ue4_shading extends AbstractSimpleBase {
 		
 
 	    glUseProgram(spPhong.getId()); //an
-	    createTetrahedron(4,1,0);
+	    createTetrahedron(-4, 3,-2 );
 		
 	    glUseProgram(0); //aus
 		
@@ -108,7 +108,7 @@ public class CG_ue4_shading extends AbstractSimpleBase {
 	
 	private void createTetrahedron(double a, double b, double c)
 	{
-		glRotated(1, 0,1,0);
+		glRotated(100, 0,1,0);
 		
 		//TETAEDRON
 	    glBegin(GL_TRIANGLES);
