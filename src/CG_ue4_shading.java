@@ -25,6 +25,8 @@ public class CG_ue4_shading extends AbstractSimpleBase {
 	private int rotateX;
 	private int  rotateY;
 	private ShaderProgram sp;
+	private ShaderProgram sp2;
+	private ShaderProgram spPhong;
 
 	@Override
 	protected void initOpenGL() {
@@ -38,7 +40,8 @@ public class CG_ue4_shading extends AbstractSimpleBase {
 		t3 = new Texture("minitextur2.jpg");
 		glShadeModel(GL_FLAT);
 		sp = new ShaderProgram("Textur_Shader");
-		
+		sp2 = new ShaderProgram("Textur_Shader2");
+		spPhong = new ShaderProgram("Textur_ShaderPhong");
 		
 	}
 
@@ -86,44 +89,55 @@ public class CG_ue4_shading extends AbstractSimpleBase {
 				}
 		createCube(); //Alt + Shift + m zum Methoden aus 
 		
-		glUseProgram(sp.getId()); //an
-		createTetrahedron();
-		glUseProgram(0); //aus
 		
 
-	}
+	    glUseProgram(sp.getId()); //an
+		createTetrahedron(0, 2, 4);
+		
+
+	    glUseProgram(sp2.getId()); //an
+		createTetrahedron(-4,-2,-4);
+		
+
+	    glUseProgram(spPhong.getId()); //an
+	    createTetrahedron(4,1,0);
+		
+	    glUseProgram(0); //aus
+		
+		}
 	
-	private void createTetrahedron()
+	private void createTetrahedron(double a, double b, double c)
 	{
-		glLoadIdentity();
 		glRotated(1, 0,1,0);
 		
-		//TETAEDRON BY HAND
+		//TETAEDRON
 	    glBegin(GL_TRIANGLES);
 
-	    //front triangle
-	    glColor3d(1.0, 0.0, 0.0);
-	    glVertex3f(0.0f, 2.0f, 0.0f);
-	    glVertex3f( -2.0f, -2.0f, 0.0f);
-	    glVertex3f( 2.0f,  -2.0f, 0.0f);
+	    //vorn
+	    glColor3d(1.0, 0.0, 0.0); //r
+	    glVertex3d(b, c, b);
+	    glVertex3d( a, a, b);
+	    glVertex3d( c,  a, b);
 
-	    //right side triangle
-	    glColor3d(0.0, 0.0, 1.0);
-	    glVertex3f( 2.0f,  -2.0f, 0.0f);
-	    glVertex3f(0.0f, 2.0f, 0.0f);
-	    glVertex3f( 0.0f,  -2.0f, -2.0f);
+	    
+	    //rechts
+	    glColor3d(0.0, 0.0, 1.0); //b
+	    glVertex3d( c,  a, b);
+	    glVertex3d(b, c, b);
+	    glVertex3d( b,  a, a);
+	    
+	    //links
+	    glColor3d(1.0, 1.0, 0); 
+	    glVertex3d( a, a, b);
+	    glVertex3d(b, c, b);
+	    glVertex3d( b,  a, a);
 
-	    //left side triangle
-	    glColor3d(1.0, 1.0, 1.0);
-	    glVertex3f( -2.0f, -2.0f, 0.0f);
-	    glVertex3f(0.0f, 2.0f, 0.0f);
-	    glVertex3f( 0.0f,  -2.0f, -2.0f);
-
-	    //bottom triangle
-	    glColor3d(0.0, 1.0, 0.0);
-	    glVertex3f( -2.0f, -2.0f, 0.0f);
-	    glVertex3f( 2.0f,  -2.0f, 0.0f);
-	    glVertex3f( 0.0f,  -2.0f, -2.0f);
+	    
+	    //unten
+	    glColor3d(0.0, 1.0, 0.0); //g
+	    glVertex3d( a, a, b);
+	    glVertex3d( c,  a, b);
+	    glVertex3d( b,  a, a);
 
 	    glEnd();
 
